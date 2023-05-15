@@ -4,22 +4,23 @@ import {
     Text,
     View,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    Pressable
  } from 'react-native';
 import { observer } from 'mobx-react';
-import {NavigationList, RESULTS } from '../type';
+import {RootStackParamList, RESULTS,GAME } from '../type';
 
-// type Props = NativeStackScreenProps<NavigationList, 'Game'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Game'>;
 
-const GameScreen: React.FC = observer(() =>  {
-    // const { navigate } = navigation;
+const GameScreen: React.FC<Props> = observer(({navigation}) =>  {
+    const { navigate } = navigation;
 
   
     return (
     <View style={styles.container}>
-        <TouchableOpacity >
-          <Text style={styles.title}>{'start'}</Text>
-        </TouchableOpacity>
+        <Pressable style={styles.startbtn}>
+        <Text style={styles.btntext}>start</Text>
+      </Pressable>
       <Text style={styles.title}>{'Current score: '}</Text>
     </View>
   );

@@ -1,17 +1,17 @@
 
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
- import {NavigationList } from '../type';
+ import {RootStackParamList, GAME } from '../type';
 import {Text, View, StyleSheet, Pressable} from 'react-native';
 
-type Props = NativeStackScreenProps<NavigationList, 'Results'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Results'>;
 
 const GameScreen = ({route, navigation}: Props) => {
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Highscores</Text>
-      <Pressable style={styles.startbtn} onPress={() => navigation.goBack()}>
+      <Pressable style={styles.startbtn} onPress={() => navigation.navigate(GAME)}>
         <Text style={styles.btntext}>New Game</Text>
       </Pressable>
     </View>

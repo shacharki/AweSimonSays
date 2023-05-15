@@ -1,7 +1,7 @@
 export const GAME = 'Game';
 export const RESULTS = 'Results';
 
-export type NavigationList = {
+export type RootStackParamList = {
     Game: undefined;
     Results: {
       score: number;
