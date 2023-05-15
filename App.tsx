@@ -1,11 +1,8 @@
 import React from 'react';
-import  GameScreen  from './App/Screens/GameScreen';
-import  ResultsScreen  from './App/Screens/ResultsScreen';
+import GameScreen from './App/Screens/GameScreen';
+import ResultsScreen from './App/Screens/ResultsScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'mobx-react';
 import { RootStackParamList } from './App/type';
 

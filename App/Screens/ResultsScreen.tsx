@@ -1,53 +1,53 @@
 
 import React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
- import {RootStackParamList, GAME } from '../type';
-import {Text, View, StyleSheet, Pressable} from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList, GAME } from '../type';
+import { Text, View, TouchableOpacity } from 'react-native';
+import styled from 'styled-components';
+
+const Button = styled(TouchableOpacity)`
+   background-color: 'orange',
+    width: 200;
+    height: 60;
+    border-radius: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20%;
+    background-color: #bbb3b3;
+`;
+const ButtonText = styled(Text)`
+  font-size: 16px;
+  color: black;
+`;
+const Title = styled(Text)`
+  font-size: 35px;
+  color: black;
+  margin: 10%;
+`;
+const Container = styled(View)`
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+`;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Results'>;
 
-const GameScreen = ({route, navigation}: Props) => {
+const GameScreen = ({ route, navigation }: Props) => {
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Highscores</Text>
-      <Pressable style={styles.startbtn} onPress={() => navigation.navigate(GAME)}>
-        <Text style={styles.btntext}>New Game</Text>
-      </Pressable>
-    </View>
-  );
+    return (
+        <Container>
+            <Title >Best results:</Title>
+            <Button onPress={() => navigation.navigate(GAME)}>
+                <ButtonText >New Game</ButtonText>
+            </Button>
+        </Container>
+    );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  title: {
-    fontSize: 48,
-    margin: '10%',
-    color: 'black',
-  },
-  startbtn: {
-    backgroundColor: 'orange',
-    width: 200,
-    height: 60,
-    borderRadius: 50,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '20%',
-  },
-  btntext: {
-    fontSize: 20,
-    fontWeight: '800',
-    color: 'black',
-  },
 
-});
 export default GameScreen;
 

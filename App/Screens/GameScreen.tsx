@@ -1,62 +1,60 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { 
-    Text,
-    View,
-    TouchableOpacity,
-    StyleSheet,
-    Pressable
- } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import { observer } from 'mobx-react';
-import {RootStackParamList, RESULTS,GAME } from '../type';
+import { RootStackParamList, RESULTS, GAME } from '../type';
+import styled from 'styled-components';
+
+
+const Button = styled(TouchableOpacity)`
+   background-color: 'orange',
+    width: 140;
+    height: 70;
+    border-radius: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30%;
+    background-color: #000000;
+`;
+const ButtonText = styled(Text)`
+  font-size: 25px;
+  color: #ffffff;
+`;
+const Title = styled(Text)`
+  font-size: 20px;
+  color: black;
+  margin: 10%;
+`;
+const Container = styled(View)`
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+`;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Game'>;
 
-const GameScreen: React.FC<Props> = observer(({navigation}) =>  {
-    const { navigate } = navigation;
+const GameScreen: React.FC<Props> = observer(({ navigation }) => {
+  const { navigate } = navigation;
 
-  
-    return (
-    <View style={styles.container}>
-        <Pressable style={styles.startbtn}>
-        <Text style={styles.btntext}>start</Text>
-      </Pressable>
-      <Text style={styles.title}>{'Current score: '}</Text>
-    </View>
+
+  return (
+    <Container>
+      <Title>{'Current score: '}</Title>
+      <Button>
+        <ButtonText>start</ButtonText>
+      </Button>
+    </Container>
   );
 
-  });
-  const styles = StyleSheet.create({
-    container: {
-      display: 'flex',
-      height: '100%',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: 'white',
-    },
-    title: {
-      fontSize: 48,
-      margin: '10%',
-      color: 'black',
-    },
-    startbtn: {
-      backgroundColor: 'orange',
-      width: 200,
-      height: 60,
-      borderRadius: 50,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: '20%',
-    },
-    btntext: {
-      fontSize: 20,
-      fontWeight: '800',
-      color: 'black',
-    },
-  
-  });
-  
-  export default GameScreen;
+});
+
+export default GameScreen;
 
