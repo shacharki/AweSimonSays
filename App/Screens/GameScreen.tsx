@@ -1,9 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
   TouchableOpacity,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { RootStackParamList, RESULTS, GAME } from '../type';
@@ -11,47 +13,118 @@ import styled from 'styled-components';
 
 
 const Button = styled(TouchableOpacity)`
-   background-color: 'orange',
-    width: 140;
-    height: 70;
-    border-radius: 50;
+    width: 90%;
+    height: 60%;
+    border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30%;
+    margin-top: 60%;
     background-color: #000000;
 `;
+const ButtonColor = styled(TouchableOpacity) <{ $color?: string }>`
+    flex:1;
+    background-color: ${p => (p?.$color ? p?.$color : 'white')};
+`;
 const ButtonText = styled(Text)`
-  font-size: 25px;
-  color: #ffffff;
+font-size: 30px;
+color: white;
+font-style: normal;
+  font-weight: 600;
+  text-align: center;
 `;
 const Title = styled(Text)`
-  font-size: 20px;
-  color: black;
-  margin: 10%;
+font-size: 20px;
+color: black;
+margin: 10%;
 `;
 const Container = styled(View)`
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
+display: flex;
+height: 75%;
+flex-direction: column;
+justify-content: flex-end;
+border-radius: 50px;
+
 `;
+const PartColor = styled(View)`
+display: flex;
+flex-direction: column;
+`;
+const SubPartColor = styled(View)`
+height: 200px;
+border-radius: 100px;
+width: 200px;
+position: absolute;
+top: 50%;
+z-index: 1;
+left: 100px;
+display: flex;
+justify-content: center;
+align-items: center;
+`;
+const Color = styled(View)`
+height: 50%;
+flex-direction: row;
+display: flex;
+
+`;
+
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Game'>;
 
 const GameScreen: React.FC<Props> = observer(({ navigation }) => {
-  const { navigate } = navigation;
 
+  const { navigate } = navigation;
+  const [clicked, setClicked] = useState<number>();
+  const [start, setStart] = useState<boolean>(false);
+
+  const clickColor = (index: number) => {
+
+  };
+
+  const pressIn = (index: number) => {
+    setClicked(index);
+  };
+
+  const RowColor = (
+    colorIndex: number,
+    colorPress: string,
+  ) => {
+    return (
+      <ButtonColor $color={colorPress}
+        onPress={() => clickColor(colorIndex)}
+        onPressIn={() => pressIn(colorIndex)}
+        onPressOut={() => setClicked(-1)}
+      ></ButtonColor>
+    );
+  };
 
   return (
-    <Container>
-      <Title>{'Current score: '}</Title>
-      <Button>
-        <ButtonText>start</ButtonText>
-      </Button>
-    </Container>
+    <SafeAreaView>
+      <StatusBar />
+      <SubPartColor>
+          {!start ? (
+            <Button onPress={() => setStart(!!start)}>
+              <ButtonText>Start</ButtonText>
+            </Button>
+          ) : (
+            <ButtonText>numberPress</ButtonText>
+          )}
+        </SubPartColor>
+      <Container>
+        
+        <PartColor>
+          <Color>
+            {RowColor(1, '#05de05')}
+            {RowColor(2, '#da0202')}
+          </Color>
+          <Color>
+            {RowColor(3, '#dddd02')}
+            {RowColor(4, '#0505e2')}
+          </Color>
+        </PartColor>
+      </Container>
+    </SafeAreaView>
   );
 
 });
