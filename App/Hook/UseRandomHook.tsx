@@ -2,12 +2,14 @@ import {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../Store/UseStore';
 import {resetUserPoint} from '../Slices/SliceSequence';
-
+import {modalOn} from '../Slices/SliceModal';
+import {addColor} from '../Slices/SliceSimon'
 const randomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 type ReturnedTypes = {
+  tempSimon: boolean;
   isStart: boolean;
   score: number;
   next: () => void;
@@ -16,14 +18,20 @@ type ReturnedTypes = {
 
 const useRandomSequence = (): ReturnedTypes => {
   const [sequence, setSequence] = useState<number[]>([]);
+  const [tempSimon, setTempSimon] = useState(false);
+
   const [isStart, setIsStart] = useState(false);
-  const _maxNum = 4;
+  const indexMax = 4;
   const initialRender = useRef(true);
   const enterSequence = useSelector(
     (state: RootState) => state.user.sequence,
   );
   const dispatch = useDispatch();
   var score = sequence.length - 1;
+
+  useEffect(() => {
+    triggerSimonSpeaking();
+  }, [sequence, isStart]);
 
   useEffect(() => {
     if (enterSequence.length > 0) {
@@ -38,14 +46,38 @@ const useRandomSequence = (): ReturnedTypes => {
   }, [initialRender.current]);
 
 
+  const triggerSimonSpeaking = async () => {
+    if (isStart) {
+      setTempSimon(true);
+      await colorsOfSequence();
+      setTempSimon(false);
+    }
+  };
+
+  const colorsOfSequence = async () => {
+    return new Promise(async resolve => {
+      let i;
+      await new Promise(resolve => setTimeout(resolve, 500));
+      for (i = 0; i < sequence.length; i++) {
+        dispatch(addColor(-1));
+        await new Promise(resolve => setTimeout(resolve, 300));
+        dispatch(addColor(sequence[i]));
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+      dispatch(addColor(-1));
+      resolve('done');
+    });
+  };
+
   const next = async () => {
     dispatch(resetUserPoint());
-    let nextElement = randomNumber(1, _maxNum);
+    let nextElement = randomNumber(1, indexMax);
     setSequence(sequence => [...sequence, nextElement]);
   };
 
   const stopGame = () => {
     setIsStart(false);
+    dispatch(modalOn());
   };
 
   const restart = () => {
@@ -67,6 +99,6 @@ const useRandomSequence = (): ReturnedTypes => {
   };
 
 
-  return {isStart, score, next, restart};
+  return {tempSimon, isStart, score, next, restart};
 };
 export default useRandomSequence;

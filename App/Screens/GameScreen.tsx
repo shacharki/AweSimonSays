@@ -1,4 +1,7 @@
-import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { 
+  createNativeStackNavigator, 
+  NativeStackScreenProps
+ } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -8,10 +11,10 @@ import {
   StatusBar,
 } from 'react-native';
 import { observer } from 'mobx-react';
-import { RootStackParamList, RESULTS, GAME } from '../type';
+import { RootStackParamList } from '../type';
 import styled from 'styled-components';
-import {Provider, useDispatch, useSelector} from 'react-redux';
-import  {RootState, store} from '../Store/UseStore';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { RootState, store } from '../Store/UseStore';
 import useRandomSequence from '../Hook/UseRandomHook';
 import { addItem } from '../Slices/SliceSequence';
 import { NavigationContainer } from '@react-navigation/native';
@@ -26,7 +29,7 @@ const Button = styled(TouchableOpacity)`
     justify-content: center;
     align-items: center;
     margin-top: 60%;
-    background-color: #000000;
+    background-color: #8c8080;
 `;
 const ButtonColor = styled(TouchableOpacity) <{ $color?: string }>`
   flex:1;
@@ -34,10 +37,28 @@ const ButtonColor = styled(TouchableOpacity) <{ $color?: string }>`
 `;
 const ButtonText = styled(Text)`
   font-size: 30px;
-  color: white;
+  color: #000000;
   font-style: normal;
   font-weight: 600;
   text-align: center;
+`;
+const ScoreText = styled(Text)`
+  font-size: 24px;
+  color: #000000;
+  font-style: normal;
+  font-weight: 600;
+  text-align: center;
+`;
+const ScoreContainer = styled(View)`
+    height: 70%;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    background-color: #978484;
+    border-radius: 50px;
+    justify-content: center;
+    display: flex;
+margin-top: 110%;
 `;
 const Container = styled(View)`
 display: flex;
@@ -74,7 +95,7 @@ const AppWrapper = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Navigate.Navigator>
-        <Navigate.Screen name="Game" component={GameScreen} />
+          <Navigate.Screen name="Game" component={GameScreen} />
           <Navigate.Screen name="Results" component={ResultsScreen} />
         </Navigate.Navigator>
       </NavigationContainer>
@@ -89,40 +110,48 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
 
   const { navigate } = navigation;
   const [clicked, setClicked] = useState<number>();
-  const [start, setStart] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const {isStart, score, restart, simonSpeaks} = useRandomSequence();
-  
+
+  const modalVisible = useSelector(
+    (state: RootState) => state.modalName.modalOn,
+  );
+
+  const currentColor = useSelector(
+    (state: RootState) => state.simon.currentColor,
+  );
+  const { isStart, score, restart, tempSimon } = useRandomSequence();
+
   useEffect(() => {
-      navigation.navigate(
+    modalVisible &&
+      navigate(
         'Results' as never,
         {
           score: score,
           restart: restart,
         } as never,
       );
-  }, []);
-  
-  const currentColor = useSelector(
-    (state: RootState) => state.simon.currentColor,
-  ); 
+  }, [modalVisible]);
 
   const clickColor = (index: number) => {
-    !simonSpeaks && isStart && dispatch(addItem(index));
+    !tempSimon && isStart && dispatch(addItem(index));
   };
 
   const pressIn = (index: number) => {
-    if(!simonSpeaks && isStart){
+    if (!tempSimon && isStart) {
       setClicked(index);
     }
   };
 
   const RowColor = (
     colorIndex: number,
-    colorPress: string,
+    ColorIn: string,
+    ColorOut: string,
   ) => {
     return (
-      <ButtonColor $color={colorPress}
+      <ButtonColor $color={
+        currentColor === colorIndex ||
+          clicked === colorIndex
+          ? ColorIn : ColorOut}
         onPress={() => clickColor(colorIndex)}
         onPressIn={() => pressIn(colorIndex)}
         onPressOut={() => setClicked(-1)}
@@ -135,24 +164,25 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
     <SafeAreaView>
       <StatusBar />
       <SubPartColor>
-          {!start ? (
-            <Button onPress={() => setStart(!!start)}>
-              <ButtonText>Start</ButtonText>
-            </Button>
-          ) : (
-            <ButtonText>numberPress</ButtonText>
-          )}
-        </SubPartColor>
+        {!isStart ? (
+          <Button onPress={restart}>
+            <ButtonText>START</ButtonText>
+          </Button>
+        ) : (
+          <ScoreContainer>
+          <ScoreText>numberPress: {score}</ScoreText>
+          </ScoreContainer>
+        )}
+      </SubPartColor>
       <Container>
-        
         <PartColor>
           <Color>
-            {RowColor(1, '#05de05')}
-            {RowColor(2, '#da0202')}
+            {RowColor(1, '#05de05', '#046104')}
+            {RowColor(2, '#da0202', '#5f0101')}
           </Color>
           <Color>
-            {RowColor(3, '#dddd02')}
-            {RowColor(4, '#0505e2')}
+            {RowColor(3, '#dddd02', '#727203')}
+            {RowColor(4, '#0505e2', '#03035f')}
           </Color>
         </PartColor>
       </Container>
