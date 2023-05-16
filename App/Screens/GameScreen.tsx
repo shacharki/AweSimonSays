@@ -91,14 +91,14 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   const [clicked, setClicked] = useState<number>();
   const [start, setStart] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const {isActive, score, restartGame, simonSpeaks} = useRandomSequence();
+  const {isStart, score, restart, simonSpeaks} = useRandomSequence();
   
   useEffect(() => {
       navigation.navigate(
         'Results' as never,
         {
           score: score,
-          restartGame: restartGame,
+          restart: restart,
         } as never,
       );
   }, []);
@@ -108,11 +108,11 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   ); 
 
   const clickColor = (index: number) => {
-    !simonSpeaks && isActive && dispatch(addItem(index));
+    !simonSpeaks && isStart && dispatch(addItem(index));
   };
 
   const pressIn = (index: number) => {
-    if(!simonSpeaks && isActive){
+    if(!simonSpeaks && isStart){
       setClicked(index);
     }
   };

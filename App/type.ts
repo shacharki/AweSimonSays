@@ -5,6 +5,6 @@ export type RootStackParamList = {
     Game: undefined;
     Results: {
       score: number;
-      restartGame: () => void;
+      restart: () => void;
     };
   };
