@@ -4,6 +4,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, GAME } from '../type';
 import { Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
+import ModalGame from './ModalGame'
+import useBestsscores from '../Hook/UseBestsScores'
 
 const Button = styled(TouchableOpacity)`
    background-color: 'orange',
@@ -36,11 +38,22 @@ const Container = styled(View)`
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Results'>;
 
-const GameScreen = ({ route, navigation }: Props) => {
+const ResultsScreen = ({ route, navigation }: Props) => {
+    const {score} = route.params;
+    const {saveScore, scoreList} = useBestsscores();
 
+    const NamesScore = scoreList.map((score, idx) => {
+        return (
+          <Text key={idx}>
+            {score.name || 'Anonymous'} - {score.score}
+          </Text>
+        );
+      });
     return (
         <Container>
+            <ModalGame saveScore={saveScore} score={score} />
             <Title >Best results:</Title>
+            <View style={{flex: 1}}>{NamesScore}</View>
             <Button onPress={() => navigation.navigate(GAME)}>
                 <ButtonText >New Game</ButtonText>
             </Button>
@@ -49,5 +62,5 @@ const GameScreen = ({ route, navigation }: Props) => {
 };
 
 
-export default GameScreen;
+export default ResultsScreen;
 
