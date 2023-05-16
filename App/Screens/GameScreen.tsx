@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 import  {RootState, store} from '../Store/UseStore';
 import useRandomSequence from '../Hook/UseRandomHook';
-import { appendElement } from '../Slices/SliceSequence';
+import { addItem } from '../Slices/SliceSequence';
 import { NavigationContainer } from '@react-navigation/native';
 import ResultsScreen from './ResultsScreen';
 
@@ -104,11 +104,11 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   }, []);
   
   const currentColor = useSelector(
-    (state: RootState) => state.simonSequence.currentColor,
+    (state: RootState) => state.simon.currentColor,
   ); 
 
   const clickColor = (index: number) => {
-    !simonSpeaks && isActive && dispatch(appendElement(index));
+    !simonSpeaks && isActive && dispatch(addItem(index));
   };
 
   const pressIn = (index: number) => {
