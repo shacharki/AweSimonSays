@@ -1,5 +1,5 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -10,6 +10,12 @@ import {
 import { observer } from 'mobx-react';
 import { RootStackParamList, RESULTS, GAME } from '../type';
 import styled from 'styled-components';
+import {Provider, useDispatch, useSelector} from 'react-redux';
+import  {RootState, store} from '../Store/UseStore';
+import useRandomSequence from '../Hook/UseRandomHook';
+import { appendElement } from '../Slices/SliceSequence';
+import { NavigationContainer } from '@react-navigation/native';
+import ResultsScreen from './ResultsScreen';
 
 
 const Button = styled(TouchableOpacity)`
@@ -23,20 +29,15 @@ const Button = styled(TouchableOpacity)`
     background-color: #000000;
 `;
 const ButtonColor = styled(TouchableOpacity) <{ $color?: string }>`
-    flex:1;
-    background-color: ${p => (p?.$color ? p?.$color : 'white')};
+  flex:1;
+  background-color: ${p => (p?.$color ? p?.$color : 'white')};
 `;
 const ButtonText = styled(Text)`
-font-size: 30px;
-color: white;
-font-style: normal;
+  font-size: 30px;
+  color: white;
+  font-style: normal;
   font-weight: 600;
   text-align: center;
-`;
-const Title = styled(Text)`
-font-size: 20px;
-color: black;
-margin: 10%;
 `;
 const Container = styled(View)`
 display: flex;
@@ -68,7 +69,19 @@ flex-direction: row;
 display: flex;
 
 `;
-
+const AppWrapper = () => {
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Navigate.Navigator>
+        <Navigate.Screen name="Game" component={GameScreen} />
+          <Navigate.Screen name="Results" component={ResultsScreen} />
+        </Navigate.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
+};
+const Navigate = createNativeStackNavigator<RootStackParamList>();
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Game'>;
 
@@ -77,13 +90,31 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   const { navigate } = navigation;
   const [clicked, setClicked] = useState<number>();
   const [start, setStart] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const {isActive, score, restartGame, simonSpeaks} = useRandomSequence();
+  
+  useEffect(() => {
+      navigation.navigate(
+        'Results' as never,
+        {
+          score: score,
+          restartGame: restartGame,
+        } as never,
+      );
+  }, []);
+  
+  const currentColor = useSelector(
+    (state: RootState) => state.simonSequence.currentColor,
+  ); 
 
   const clickColor = (index: number) => {
-
+    !simonSpeaks && isActive && dispatch(appendElement(index));
   };
 
   const pressIn = (index: number) => {
-    setClicked(index);
+    if(!simonSpeaks && isActive){
+      setClicked(index);
+    }
   };
 
   const RowColor = (
@@ -100,6 +131,7 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   };
 
   return (
+
     <SafeAreaView>
       <StatusBar />
       <SubPartColor>
@@ -129,5 +161,5 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
 
 });
 
-export default GameScreen;
+export default AppWrapper;
 
