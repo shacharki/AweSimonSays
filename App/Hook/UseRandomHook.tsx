@@ -4,6 +4,8 @@ import {RootState} from '../Store/UseStore';
 import {resetUserPoint} from '../Slices/SliceSequence';
 import {modalOn} from '../Slices/SliceModal';
 import {addColor} from '../Slices/SliceSimon'
+import useSoundsHook from './UseSoundsHook';
+
 const randomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -19,10 +21,10 @@ type ReturnedTypes = {
 const useRandomSequence = (): ReturnedTypes => {
   const [sequence, setSequence] = useState<number[]>([]);
   const [tempSimon, setTempSimon] = useState(false);
-
   const [isStart, setIsStart] = useState(false);
   const indexMax = 4;
   const initialRender = useRef(true);
+  const sound = useSoundsHook();
   const enterSequence = useSelector(
     (state: RootState) => state.user.sequence,
   );
@@ -62,6 +64,7 @@ const useRandomSequence = (): ReturnedTypes => {
         dispatch(addColor(-1));
         await new Promise(resolve => setTimeout(resolve, 300));
         dispatch(addColor(sequence[i]));
+        sound[sequence[i] - 1]?.play();
         await new Promise(resolve => setTimeout(resolve, 300));
       }
       dispatch(addColor(-1));

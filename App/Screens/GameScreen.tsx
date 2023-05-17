@@ -19,6 +19,7 @@ import useRandomSequence from '../Hook/UseRandomHook';
 import { addItem } from '../Slices/SliceSequence';
 import { NavigationContainer } from '@react-navigation/native';
 import ResultsScreen from './ResultsScreen';
+ import useSoundsHook from '../Hook/UseSoundsHook';
 
 
 const Button = styled(TouchableOpacity)`
@@ -50,44 +51,44 @@ const ScoreText = styled(Text)`
   text-align: center;
 `;
 const ScoreContainer = styled(View)`
-    height: 70%;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    background-color: #978484;
-    border-radius: 50px;
-    justify-content: center;
-    display: flex;
-margin-top: 110%;
+  height: 70%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  background-color: #978484;
+  border-radius: 50px;
+  justify-content: center;
+  display: flex;
+  margin-top: 110%;
 `;
 const Container = styled(View)`
-display: flex;
-height: 75%;
-flex-direction: column;
-justify-content: flex-end;
-border-radius: 50px;
+  display: flex;
+  height: 75%;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 50px;
 
 `;
 const PartColor = styled(View)`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 const SubPartColor = styled(View)`
-height: 200px;
-border-radius: 100px;
-width: 200px;
-position: absolute;
-top: 50%;
-z-index: 1;
-left: 100px;
-display: flex;
-justify-content: center;
-align-items: center;
+  height: 200px;
+  border-radius: 100px;
+  width: 200px;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  left: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const Color = styled(View)`
-height: 50%;
-flex-direction: row;
-display: flex;
+  height: 50%;
+  flex-direction: row;
+  display: flex;
 
 `;
 const AppWrapper = () => {
@@ -111,7 +112,7 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   const { navigate } = navigation;
   const [clicked, setClicked] = useState<number>();
   const dispatch = useDispatch();
-
+   const sound = useSoundsHook();
   const modalVisible = useSelector(
     (state: RootState) => state.modalName.modalOn,
   );
@@ -138,6 +139,7 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
 
   const pressIn = (index: number) => {
     if (!tempSimon && isStart) {
+      sound[index-1]?.play()
       setClicked(index);
     }
   };

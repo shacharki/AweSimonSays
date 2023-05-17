@@ -12,6 +12,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		3DF0694F2A153A1C00A92458 /* blip4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DF0694E2A153A1C00A92458 /* blip4.wav */; };
+		3DF069512A153A3E00A92458 /* blip3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DF069502A153A3E00A92458 /* blip3.wav */; };
+		3DF069532A153A5500A92458 /* blip2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DF069522A153A5500A92458 /* blip2.wav */; };
+		3DF069552A153A6200A92458 /* blip1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3DF069542A153A6200A92458 /* blip1.wav */; };
 		7699B88040F8A987B510C191 /* libPods-AweSimonSays-AweSimonSaysTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AweSimonSays-AweSimonSaysTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -38,6 +42,10 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AweSimonSays/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-AweSimonSays-AweSimonSaysTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AweSimonSays-AweSimonSaysTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-AweSimonSays.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AweSimonSays.debug.xcconfig"; path = "Target Support Files/Pods-AweSimonSays/Pods-AweSimonSays.debug.xcconfig"; sourceTree = "<group>"; };
+		3DF0694E2A153A1C00A92458 /* blip4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blip4.wav; path = ../App/Sounds/blip4.wav; sourceTree = "<group>"; };
+		3DF069502A153A3E00A92458 /* blip3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blip3.wav; path = ../App/Sounds/blip3.wav; sourceTree = "<group>"; };
+		3DF069522A153A5500A92458 /* blip2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blip2.wav; path = ../App/Sounds/blip2.wav; sourceTree = "<group>"; };
+		3DF069542A153A6200A92458 /* blip1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = blip1.wav; path = ../App/Sounds/blip1.wav; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-AweSimonSays.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AweSimonSays.release.xcconfig"; path = "Target Support Files/Pods-AweSimonSays/Pods-AweSimonSays.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-AweSimonSays-AweSimonSaysTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AweSimonSays-AweSimonSaysTests.debug.xcconfig"; path = "Target Support Files/Pods-AweSimonSays-AweSimonSaysTests/Pods-AweSimonSays-AweSimonSaysTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-AweSimonSays.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AweSimonSays.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +124,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3DF069542A153A6200A92458 /* blip1.wav */,
+				3DF069522A153A5500A92458 /* blip2.wav */,
+				3DF069502A153A3E00A92458 /* blip3.wav */,
+				3DF0694E2A153A1C00A92458 /* blip4.wav */,
 				13B07FAE1A68108700A75B9A /* AweSimonSays */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AweSimonSaysTests */,
@@ -244,6 +256,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				3DF0694F2A153A1C00A92458 /* blip4.wav in Resources */,
+				3DF069512A153A3E00A92458 /* blip3.wav in Resources */,
+				3DF069532A153A5500A92458 /* blip2.wav in Resources */,
+				3DF069552A153A6200A92458 /* blip1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
