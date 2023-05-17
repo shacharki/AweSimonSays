@@ -20,21 +20,27 @@ import { addItem } from '../Slices/SliceSequence';
 import { NavigationContainer } from '@react-navigation/native';
 import ResultsScreen from './ResultsScreen';
  import useSoundsHook from '../Hook/UseSoundsHook';
+ import { Platform } from 'react-native';
 
 
 const Button = styled(TouchableOpacity)`
     width: 90%;
-    height: 60%;
+    height: ${Platform.OS === 'ios' ?  '50%' : '40%'};
     border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 60%;
+    margin-top: 70%;
+    ${Platform.OS !== 'ios' &&  'margin-right: 20%'};
     background-color: #8c8080;
 `;
 const ButtonColor = styled(TouchableOpacity) <{ $color?: string }>`
   flex:1;
   background-color: ${p => (p?.$color ? p?.$color : 'white')};
+  margin: 5px;
+  border-radius: 50px;
+  border-width: 3px;
+
 `;
 const ButtonText = styled(Text)`
   font-size: 30px;
@@ -150,7 +156,9 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
     ColorOut: string,
   ) => {
     return (
-      <ButtonColor $color={
+      <ButtonColor 
+      disabled={!isStart}
+      $color={
         currentColor === colorIndex ||
           clicked === colorIndex
           ? ColorIn : ColorOut}
