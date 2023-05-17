@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Store/UseStore';
 import { modalOff } from '../Slices/SliceModal';
-import { Text, View, Modal, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, Modal, TextInput, TouchableOpacity, Platform } from 'react-native';
 import styled from 'styled-components';
 
 const CenterView = styled(View)`
@@ -17,16 +17,24 @@ const ButtonShow = styled(TouchableOpacity)`
     background-color: #1b76de;
     margin-top: 20px;
     border-width: 1px;
+    width: 200px;
 `;
 const ButtonText = styled(Text)`
     color: #000000;
-    font-weight: bold;
     text-align: center;
+    font-size: ${Platform.OS === 'ios' ? '18px' : '15px'};
+`;
+const InputText = styled(TextInput)`
+    /* color: #000000; */
+    text-align: center;
+    font-size: ${Platform.OS === 'ios' ? '18px' : '15px'};
 `;
 const ModalText = styled(Text)`
     margin-bottom: 15px;
     text-align: center;
     color: black;
+    font-size: ${Platform.OS === 'ios' ? '20px' : '18px'};
+
 `;
 const ModalView = styled(View)`
     margin: 20px;
@@ -39,12 +47,12 @@ const ModalView = styled(View)`
       width: 0px;
       height: 2px;
     };
-    shadow-opacity: 0.25px;
+    shadow-opacity: 0.5px;
     shadow-radius: 4px;
     elevation: 5px;
 `;
 const ErrorText = styled(Text)`
-  font-size: 12px;
+  font-size: ${Platform.OS === 'ios' ? '18px' : '12px'};
   color: red;
   margin-top: 16px;
 `;
@@ -64,7 +72,7 @@ const ModalGame = ({ saveScore, score }: Props) => {
         if (!playerName) {
             setError(true)
             return
-        }if(!error){
+        } if (!error) {
             saveScore(playerName, score)
             dispatch(modalOff());
         }
@@ -77,11 +85,11 @@ const ModalGame = ({ saveScore, score }: Props) => {
     const handleNamePlayer = (event: string) => {
         if (!event) {
             setError(true)
-        }else{
+        } else {
             setError(false)
             setPlayerName(event)
         }
-  
+
     };
 
     return (
@@ -95,17 +103,15 @@ const ModalGame = ({ saveScore, score }: Props) => {
             <CenterView>
                 <ModalView>
                     <ModalText>Game Over!!!</ModalText>
-                    <TextInput
+                    <InputText
                         placeholder="Add Your Name"
                         onChangeText={e => handleNamePlayer(e)}
                         defaultValue={playerName}
-                        multiline
-                        editable
                     />
-                    <ErrorText>{error && "tou musr right your name"}</ErrorText>
+                    <ErrorText>{error && "Please enter your name"}</ErrorText>
                     <ButtonShow
                         onPress={showResults}>
-                        <ButtonText>Show Best Results</ButtonText>
+                        <ButtonText>Show Results</ButtonText>
                     </ButtonShow>
                 </ModalView>
             </CenterView>

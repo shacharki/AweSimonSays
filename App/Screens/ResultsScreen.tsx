@@ -39,8 +39,8 @@ const ViewList = styled(View)`
     flex: 1;
 `;
 const TextPlayers = styled(Text)`
-    ${Platform.OS === 'ios' &&  'margin: 7px'};
-    ${Platform.OS === 'ios' &&  'font-size: 17px'};
+    ${Platform.OS === 'ios' && 'margin: 7px'};
+    ${Platform.OS === 'ios' && 'font-size: 17px'};
 `;
 
 
@@ -48,16 +48,16 @@ const TextPlayers = styled(Text)`
 type Props = NativeStackScreenProps<RootStackParamList, 'Results'>;
 
 const ResultsScreen = ({ route, navigation }: Props) => {
-    const {score} = route.params;
-    const {saveScore, scoreList} = useBestsscores();
+    const { score } = route.params;
+    const { saveScore, scoreList } = useBestsscores();
 
     const NamesScore = scoreList.map((score, idx) => {
         return (
-          <TextPlayers key={idx}>
-            {score.name || 'Anonymous'} - {score.score}
-          </TextPlayers>
+            <TextPlayers key={idx}>
+                {score.name || 'Anonymous'} - {score.score}
+            </TextPlayers>
         );
-      });
+    });
     return (
         <Container>
             <ModalGame saveScore={saveScore} score={score} />

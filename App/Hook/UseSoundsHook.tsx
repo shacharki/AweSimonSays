@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Sound from 'react-native-sound';
 Sound.setCategory('Playback');
 

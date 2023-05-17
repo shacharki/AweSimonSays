@@ -1,9 +1,9 @@
-import {useState, useEffect, useRef} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../Store/UseStore';
-import {resetUserPoint} from '../Slices/SliceSequence';
-import {modalOn} from '../Slices/SliceModal';
-import {addColor} from '../Slices/SliceSimon'
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../Store/UseStore';
+import { resetUserPoint } from '../Slices/SliceSequence';
+import { modalOn } from '../Slices/SliceModal';
+import { addColor } from '../Slices/SliceSimon'
 import useSoundsHook from './UseSoundsHook';
 
 const randomNumber = (min: number, max: number) => {
@@ -102,6 +102,6 @@ const useRandomSequence = (): ReturnedTypes => {
   };
 
 
-  return {tempSimon, isStart, score, next, restart};
+  return { tempSimon, isStart, score, next, restart };
 };
 export default useRandomSequence;

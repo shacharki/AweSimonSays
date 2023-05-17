@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import RNFS from 'react-native-fs';
 
 type scoreObject = {
@@ -49,10 +49,10 @@ export default function useHighscores() {
     });
   };
 
- 
+
   const saveScore = async (name: string, score: number) => {
-    let playerName = name.replace('|', ''); 
-    await readFile(); 
+    let playerName = name.replace('|', '');
+    await readFile();
     let newFileContent = sortBestsResults(playerName, score).slice(
       0,
       LENGTH_LIST,
@@ -61,7 +61,7 @@ export default function useHighscores() {
     let str = '';
     newFileContent.forEach(
       item =>
-        (str += JSON.stringify({name: item.name, score: item.score}) + '|'),
+        (str += JSON.stringify({ name: item.name, score: item.score }) + '|'),
     );
     RNFS.writeFile(path, str).catch(err => {
       console.log(err.message);
@@ -70,7 +70,7 @@ export default function useHighscores() {
 
   const sortBestsResults = (name: string, score: number) => {
     let tempFileContent = [...fileContent];
-    tempFileContent.push({name: name, score: score});
+    tempFileContent.push({ name: name, score: score });
     let arrLength = tempFileContent.length || 0;
     for (let i = 0; i < arrLength - 1; i++) {
       for (let j = i + 1; j < arrLength; j++) {
@@ -84,5 +84,5 @@ export default function useHighscores() {
     return tempFileContent;
   };
 
-  return {saveScore: saveScore, scoreList: fileContent};
+  return { saveScore: saveScore, scoreList: fileContent };
 }

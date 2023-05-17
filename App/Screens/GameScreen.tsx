@@ -1,7 +1,7 @@
-import { 
-  createNativeStackNavigator, 
+import {
+  createNativeStackNavigator,
   NativeStackScreenProps
- } from '@react-navigation/native-stack';
+} from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -19,28 +19,48 @@ import useRandomSequence from '../Hook/UseRandomHook';
 import { addItem } from '../Slices/SliceSequence';
 import { NavigationContainer } from '@react-navigation/native';
 import ResultsScreen from './ResultsScreen';
- import useSoundsHook from '../Hook/UseSoundsHook';
- import { Platform } from 'react-native';
+import useSoundsHook from '../Hook/UseSoundsHook';
+import { Platform } from 'react-native';
 
 
-const Button = styled(TouchableOpacity)`
-    width: 90%;
-    height: ${Platform.OS === 'ios' ?  '50%' : '40%'};
-    border-radius: 50px;
+const ViewGame = styled(View)`
+      background-color: #000000;
+      height: 100%;
+`;
+const ButtonStart = styled(TouchableOpacity)`
+    width: 100%;
+    height: 100%;
+    border-radius: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 70%;
-    ${Platform.OS !== 'ios' &&  'margin-right: 20%'};
+    margin-bottom: ${Platform.OS === 'ios' ? '180%' : '150%'};
+    ${Platform.OS !== 'ios' && 'margin-right: 20%'};
     background-color: #8c8080;
+    shadow-color: #000000;
+    shadow-offset: {
+      width: 0px;
+      height: 2px;
+    };
+    shadow-opacity: 0.5px;
+    shadow-radius: 4px;
+    elevation: 5px;
+    border-width: 1px;
+
 `;
 const ButtonColor = styled(TouchableOpacity) <{ $color?: string }>`
   flex:1;
-  background-color: ${p => (p?.$color ? p?.$color : 'white')};
-  margin: 5px;
-  border-radius: 50px;
-  border-width: 3px;
-
+  background-color: ${p => p?.$color};
+  margin: 7px;
+  border-radius: 60px;
+  shadow-color: #ffffff; 
+     shadow-offset: {
+      width: 0px;
+      height: 2px;
+    };
+    shadow-opacity: 0.5px;
+    shadow-radius: 4px;
+    elevation: 5px;
 `;
 const ButtonText = styled(Text)`
   font-size: 30px;
@@ -57,7 +77,7 @@ const ScoreText = styled(Text)`
   text-align: center;
 `;
 const ScoreContainer = styled(View)`
-  height: 70%;
+  height: 40%;
   width: 100%;
   flex-direction: column;
   align-items: center;
@@ -65,7 +85,9 @@ const ScoreContainer = styled(View)`
   border-radius: 50px;
   justify-content: center;
   display: flex;
-  margin-top: 110%;
+  margin-top: 100%;
+  ${Platform.OS !== 'ios' && 'margin-right: 20%'};
+  ${Platform.OS !== 'ios' && 'margin-bottom: 20%'};
 `;
 const Container = styled(View)`
   display: flex;
@@ -92,7 +114,7 @@ const SubPartColor = styled(View)`
   align-items: center;
 `;
 const Color = styled(View)`
-  height: 50%;
+  height:  ${Platform.OS === 'ios' ? '40%' : '50%'};
   flex-direction: row;
   display: flex;
 
@@ -118,7 +140,7 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   const { navigate } = navigation;
   const [clicked, setClicked] = useState<number>();
   const dispatch = useDispatch();
-   const sound = useSoundsHook();
+  const sound = useSoundsHook();
   const modalVisible = useSelector(
     (state: RootState) => state.modalName.modalOn,
   );
@@ -145,7 +167,7 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
 
   const pressIn = (index: number) => {
     if (!tempSimon && isStart) {
-      sound[index-1]?.play()
+      sound[index - 1]?.play()
       setClicked(index);
     }
   };
@@ -156,12 +178,12 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
     ColorOut: string,
   ) => {
     return (
-      <ButtonColor 
-      disabled={!isStart}
-      $color={
-        currentColor === colorIndex ||
-          clicked === colorIndex
-          ? ColorIn : ColorOut}
+      <ButtonColor
+        disabled={!isStart}
+        $color={
+          (currentColor === colorIndex ||
+            clicked === colorIndex)
+            ? ColorIn : ColorOut}
         onPress={() => clickColor(colorIndex)}
         onPressIn={() => pressIn(colorIndex)}
         onPressOut={() => setClicked(-1)}
@@ -171,16 +193,16 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
 
   return (
 
-    <SafeAreaView>
+    <ViewGame>
       <StatusBar />
       <SubPartColor>
         {!isStart ? (
-          <Button onPress={restart}>
+          <ButtonStart onPress={restart}>
             <ButtonText>START</ButtonText>
-          </Button>
+          </ButtonStart>
         ) : (
           <ScoreContainer>
-          <ScoreText>numberPress: {score}</ScoreText>
+            <ScoreText>Score: {score}</ScoreText>
           </ScoreContainer>
         )}
       </SubPartColor>
@@ -191,12 +213,12 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
             {RowColor(2, '#da0202', '#5f0101')}
           </Color>
           <Color>
-            {RowColor(3, '#dddd02', '#727203')}
+            {RowColor(3, '#dddd02', '#6e6e06')}
             {RowColor(4, '#0505e2', '#03035f')}
           </Color>
         </PartColor>
       </Container>
-    </SafeAreaView>
+    </ViewGame>
   );
 
 });
