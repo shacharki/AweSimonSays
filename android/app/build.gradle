@@ -118,10 +118,10 @@ android {
             keyPassword 'android'
         }
         release {
-      storeFile file('simon.keystore')
-      storePassword '0528312sh'
-      keyAlias 'shachar'
-      keyPassword '0528312sh'
+            storeFile file('simon.keystore')
+            storePassword '0528312sh'
+            keyAlias 'shachar'
+            keyPassword '0528312sh'
     }
     }
     buildTypes {
