@@ -33,7 +33,7 @@ const Container = styled(View)`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
+    background-color: '#5c92af4c',
 `;
 const ViewList = styled(View)`
     flex: 1;

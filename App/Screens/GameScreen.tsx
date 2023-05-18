@@ -7,7 +7,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  SafeAreaView,
+  Pressable,
   StatusBar,
 } from 'react-native';
 import { observer } from 'mobx-react';
@@ -34,7 +34,7 @@ const ButtonStart = styled(TouchableOpacity)`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: ${Platform.OS === 'ios' ? '180%' : '150%'};
+    margin-bottom: ${Platform.OS === 'ios' ? '180%' : '160%'};
     ${Platform.OS !== 'ios' && 'margin-right: 20%'};
     background-color: #8c8080;
     shadow-color: #000000;
@@ -48,7 +48,7 @@ const ButtonStart = styled(TouchableOpacity)`
     border-width: 1px;
 
 `;
-const ButtonColor = styled(TouchableOpacity) <{ $color?: string }>`
+const ButtonColor = styled(Pressable) <{ $color?: string }>`
   flex:1;
   background-color: ${p => p?.$color};
   margin: 7px;
@@ -87,7 +87,6 @@ const ScoreContainer = styled(View)`
   display: flex;
   margin-top: 100%;
   ${Platform.OS !== 'ios' && 'margin-right: 20%'};
-  ${Platform.OS !== 'ios' && 'margin-bottom: 20%'};
 `;
 const Container = styled(View)`
   display: flex;
@@ -114,7 +113,7 @@ const SubPartColor = styled(View)`
   align-items: center;
 `;
 const Color = styled(View)`
-  height:  ${Platform.OS === 'ios' ? '40%' : '50%'};
+  height:  ${Platform.OS === 'ios' ? '40%' : '45%'};
   flex-direction: row;
   display: flex;
 
@@ -162,7 +161,7 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   }, [modalVisible]);
 
   const clickColor = (index: number) => {
-    !tempSimon && isStart && dispatch(addItem(index));
+    (!tempSimon && isStart) && dispatch(addItem(index));
   };
 
   const pressIn = (index: number) => {
@@ -179,10 +178,10 @@ const GameScreen: React.FC<Props> = observer(({ navigation }) => {
   ) => {
     return (
       <ButtonColor
-        disabled={!isStart}
+        disabled={!isStart || tempSimon}
         $color={
-          (currentColor === colorIndex ||
-            clicked === colorIndex)
+          (clicked === colorIndex ||
+            currentColor === colorIndex)
             ? ColorIn : ColorOut}
         onPress={() => clickColor(colorIndex)}
         onPressIn={() => pressIn(colorIndex)}
