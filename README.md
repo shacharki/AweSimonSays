@@ -10,3 +10,7 @@ Technical guidelines:
   - redux.
   - react-navigation v5.
 
+Downloaded apk:
+
+https://drive.google.com/file/d/1BKdXf0RvKSDcbOg3W_qNfFW1gLpVkDlJ/view?usp=sharing
+
